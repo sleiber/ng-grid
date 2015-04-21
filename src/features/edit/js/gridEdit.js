@@ -646,18 +646,29 @@
               html = html.replace(uiGridConstants.CUSTOM_FILTERS, optionFilter);
 
               var inputType = 'text';
+              var inputTypeAttrs = '';
               switch ($scope.col.colDef.type){
                 case 'boolean':
                   inputType = 'checkbox';
                   break;
                 case 'number':
                   inputType = 'number';
+                  if (angular.isNumber($scope.col.colDef.min)) {
+                    inputTypeAttrs += 'min="' + $scope.col.colDef.min + '" ';
+                  }
+                  if (angular.isNumber($scope.col.colDef.max)) {
+                    inputTypeAttrs += 'max="' + $scope.col.colDef.max + '" ';
+                  }
+                  if (angular.isNumber($scope.col.colDef.step)) {
+                    inputTypeAttrs += 'step="' + $scope.col.colDef.step + '" ';
+                  }
                   break;
                 case 'date':
                   inputType = 'date';
                   break;
               }
               html = html.replace('INPUT_TYPE', inputType);
+              html = html.replace('INPUT_TYPE_ATTRS', inputTypeAttrs);
 
               var editDropdownRowEntityOptionsArrayPath = $scope.col.colDef.editDropdownRowEntityOptionsArrayPath;
               if (editDropdownRowEntityOptionsArrayPath) {
